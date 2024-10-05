@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Celebration</title>
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #1a1a1a 0%, #333 100%);
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+            padding: 20px;
+        }
+
+        .container {
+            text-align: center;
+            z-index: 1;
+            max-width: 800px;
+        }
+
+        .celebration-button {
+            padding: 15px 30px;
+            font-size: 24px;
+            background: linear-gradient(45deg, #ff6b6b, #ffc847);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+            margin-bottom: 20px;
+            z-index: 100;
+        }
+
+        .celebration-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.6);
+        }
+
+        #messageBox {
+            display: none;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            margin: 20px auto;
+            max-width: 600px;
+            transform: scale(0.5);
+            opacity: 0;
+            transition: all 1s ease;
+        }
+
+        #messageBox.show {
+            display: block;
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .message-title {
+            font-size: 32px;
+            color: #ffd700;
+            margin-bottom: 20px;
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        .message-content {
+            font-size: 18px;
+            line-height: 1.6;
+            color: white;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #f00;
+            opacity: 0;
+        }
+
+        .balloon {
+            position: absolute;
+            width: 30px;
+            height: 40px;
+            border-radius: 50%;
+            opacity: 0;
+        }
+
+        .cake {
+            font-size: 80px;
+            margin: 20px;
+            display: none;
+            animation: bounce 1s infinite ease-in-out;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes glow {
+            0%, 100% { text-shadow: 0 0 10px #ffd700; }
+            50% { text-shadow: 0 0 20px #ffd700, 0 0 30px #ffd700; }
+        }
+
+        @media (max-width: 768px) {
+            .message-title {
+                font-size: 24px;
+            }
+            .message-content {
+                font-size: 16px;
+            }
+            #messageBox {
+                padding: 20px;
+                margin: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="celebration-button" onclick="startCelebration()">For Baba 🎁</button>
+        <div class="cake" id="cake">🎂</div>
+        <div id="messageBox">
+            <div class="message-title">
+                Happy Birthday, Baba! 🎉
+            </div>
+            <div class="message-content">
+                Thank you for always being there for me, guiding me with your wisdom, love, and strength. I can't put into words how much your presence means in my life. I'm so grateful for everything you've done to help me become who I am today. May this year bring you nothing but happiness, great health, and tons of joyful moments. You deserve the best day ever! ❤️
+
+                With love,
+                Mustafa
+                
+                
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function createConfetti() {
+            const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#ffeead', '#ff9999'];
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animation = `fall ${Math.random() * 3 + 2}s linear`;
+                document.body.appendChild(confetti);
+
+                confetti.addEventListener('animationend', () => {
+                    confetti.remove();
+                });
+            }
+        }
+
+        function createBalloons() {
+            const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#ffeead'];
+            for (let i = 0; i < 10; i++) {
+                const balloon = document.createElement('div');
+                balloon.className = 'balloon';
+                balloon.style.left = Math.random() * 100 + 'vw';
+                balloon.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                balloon.style.animation = `float 4s ease-in-out infinite`;
+                balloon.style.animationDelay = `${Math.random() * 2}s`;
+                document.body.appendChild(balloon);
+                
+                setTimeout(() => {
+                    balloon.style.opacity = '1';
+                }, 100);
+
+                setTimeout(() => {
+                    balloon.remove();
+                }, 10000);
+            }
+        }
+
+        function startCelebration() {
+            // Show cake
+            const cake = document.getElementById('cake');
+            cake.style.display = 'block';
+
+            // Show message with animation
+            const messageBox = document.getElementById('messageBox');
+            messageBox.style.display = 'block';
+            setTimeout(() => {
+                messageBox.classList.add('show');
+            }, 100);
+
+            // Create celebration effects
+            createConfetti();
+            createBalloons();
+
+            // Continue celebrations
+            setInterval(createConfetti, 3000);
+            setInterval(createBalloons, 4000);
+
+            // Disable button
+            const button = document.querySelector('.celebration-button');
+            button.disabled = true;
+            button.style.opacity = '0.7';
+        }
+    </script>
+</body>
+</html>
